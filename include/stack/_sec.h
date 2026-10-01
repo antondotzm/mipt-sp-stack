@@ -41,28 +41,24 @@ _stack_fill_canary_contentend(self);
 #endif
 }
 
-static inline void _stack_check(const struct Stack *self) {
-  $stack_assert(self, self != NULL);
-  $stack_assert(self, self->begin!=NULL);
-  $stack_assert(self, self->current >= self->begin);
-  $stack_assert(self, self->end >= self->current);
-  $stack_assert(self, self->element_size != 0);
-  $stack_assert(self,
-                ((const char *)self->current - (const char *)self->begin) %
-                        self->element_size ==
-                    0);
-
-  $stack_assert(self, _stack_check_canary_structbegin(self)!=0);
-  $stack_assert(self, _stack_check_canary_structend(self)!=0);
-
-  $stack_assert(self, _stack_check_canary_contentbegin(self)!=0);
-  $stack_assert(self, _stack_check_canary_contentend(self)!=0);
-  #ifdef _STACK_HASH_STRUCT
-    $stack_assert(self, _stack_check_struct_hash(self) != 0);
-  #endif
-  #ifdef _STACK_HASH_CONTENT
-    $stack_assert(self, _stack_check_content_hash(self) != 0);
-  #endif
-}
+#define _stack_check(self) do{ \
+  $stack_assert(self, self != NULL); \
+  $stack_assert(self, self->begin!=NULL); \
+  $stack_assert(self, self->current >= self->begin); \
+  $stack_assert(self, self->end >= self->current); \
+  $stack_assert(self, self->element_size != 0); \
+  $stack_assert(self, \
+                ((const char *)self->current - (const char *)self->begin) % \
+                        self->element_size == \
+                    0); \
+ \
+  $stack_assert(self, _stack_check_canary_structbegin(self)!=0); \
+  $stack_assert(self, _stack_check_canary_structend(self)!=0); \
+ \
+  $stack_assert(self, _stack_check_canary_contentbegin(self)!=0); \
+  $stack_assert(self, _stack_check_canary_contentend(self)!=0); \
+    $stack_assert(self, _stack_check_struct_hash(self) != 0); \
+    $stack_assert(self, _stack_check_content_hash(self) != 0); \
+}while(0);
 
 #endif

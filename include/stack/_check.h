@@ -28,7 +28,8 @@ static inline djb2_t _stack_fill_struct_hash(struct Stack *self) {
 #endif
   return old;
 }
-
+#else
+static inline char _stack_check_struct_hash(const struct Stack *_) {return 1;}
 #endif
 #ifdef _STACK_HASH_CONTENT
 static inline djb2_t _stack_fill_content_hash(struct Stack *self) {
@@ -41,6 +42,8 @@ static inline char _stack_check_content_hash(const struct Stack *self) {
   djb2_t real = djb2(self->begin, self->end);
   return real == self->_hash_content;
 }
+#else
+static inline char _stack_check_content_hash(const struct Stack *_) {return 1;}
 #endif
 
 #endif
