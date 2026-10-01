@@ -72,12 +72,12 @@ void *stack_push(struct Stack *self, void *elem) {
   _stack_check(self);
   void *new_elem = _stack_push_uninit(self);
   memmove(new_elem, elem, self->element_size);
-  #ifdef _STACK_HASH_CONTENT
-    _stack_fill_content_hash(self);
-  #endif
-  #ifdef _STACK_HASH_CONTENT
-    _stack_fill_struct_hash(self);
-  #endif
+#ifdef _STACK_HASH_CONTENT
+  _stack_fill_content_hash(self);
+#endif
+#ifdef _STACK_HASH_STRUCT
+  _stack_fill_struct_hash(self);
+#endif
   _stack_check(self);
   return new_elem;
 }
@@ -94,6 +94,9 @@ StackError stack_pop(struct Stack *self, void *elem) {
 #endif
 #ifdef _STACK_HASH_CONTENT
   _stack_fill_content_hash(self);
+#endif
+#ifdef _STACK_HASH_STRUCT
+  _stack_fill_struct_hash(self);
 #endif
   return _STACK_ERROR_OK;
 }
