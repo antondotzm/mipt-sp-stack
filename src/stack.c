@@ -75,7 +75,7 @@ void *stack_push(struct Stack *self, void *elem) {
 #ifdef _STACK_HASH_CONTENT
   _stack_fill_content_hash(self);
 #endif
-#ifdef _STACK_HASH_CONTENT
+#ifdef _STACK_HASH_STRUCT
   _stack_fill_struct_hash(self);
 #endif
   _stack_check(self);
@@ -92,6 +92,9 @@ StackError stack_pop(struct Stack *self, void *elem) {
 #endif
 #ifdef _STACK_HASH_CONTENT
   _stack_fill_content_hash(self);
+#endif
+#ifdef _STACK_HASH_STRUCT
+  _stack_fill_struct_hash(self);
 #endif
   return _STACK_ERROR_OK;
 }
