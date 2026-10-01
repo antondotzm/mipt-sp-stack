@@ -7,7 +7,7 @@ StackError stack_with_capacity(struct Stack *self, const size_t capacity,
   assert(self != NULL);
   assert(element_size > 0);
   assert(self->begin == NULL);
-  self->begin = calloc(capacity * element_size + STACK_CANARY_CONTENT_SIZE, 1);
+  self->begin = calloc(capacity, element_size);
   if (self->begin == NULL)
     return _STACK_ERROR_UNKNOWN;
   self->begin = (void *)((char *)self->begin + STACK_CANARY_CONTENTBEGIN_SIZE);
@@ -64,7 +64,7 @@ void *_stack_push_uninit(struct Stack *self) {
 #ifdef _STACK_HASH_STRUCT
   _stack_fill_struct_hash(self);
 #endif
-// Do not check because _stack_fill_content_hash is not called
+  // Do not check because _stack_fill_content_hash is not called
   // _stack_check(self);
   return result;
 }
@@ -72,20 +72,18 @@ void *stack_push(struct Stack *self, void *elem) {
   _stack_check(self);
   void *new_elem = _stack_push_uninit(self);
   memmove(new_elem, elem, self->element_size);
-  #ifdef _STACK_HASH_CONTENT
-    _stack_fill_content_hash(self);
-  #endif
-  #ifdef _STACK_HASH_CONTENT
-    _stack_fill_struct_hash(self);
-  #endif
+#ifdef _STACK_HASH_CONTENT
+  _stack_fill_content_hash(self);
+#endif
+#ifdef _STACK_HASH_CONTENT
+  _stack_fill_struct_hash(self);
+#endif
   _stack_check(self);
   return new_elem;
 }
 
 StackError stack_pop(struct Stack *self, void *elem) {
   _stack_check(self);
-  $stack_assert(self, (char *)self->current >=
-                          self->element_size + (char *)self->begin);
   self->current = (void *)((char *)self->current - self->element_size);
   memmove(elem, self->current, self->element_size);
 
