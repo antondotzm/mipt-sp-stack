@@ -86,44 +86,48 @@ static inline void stack_assert_failed(const struct Stack *self,
 }
 
 #include "_check.h"
+// clang-format off
 static inline long _stack_sec_mask(const struct Stack *self) {
   long mask = 0;
   if (self == NULL) {
-    return STACK_NULL_PTR;
+    return 		STACK_NULL_PTR;
   }
   if (!self->begin)
-    mask |= STACK_NULL_BEGIN;
+    mask 	|=  STACK_NULL_BEGIN;
   if (self->current < self->begin)
-    mask |= STACK_CURRENT_LT_BEGIN;
+    mask 	|= STACK_CURRENT_LT_BEGIN;
   if (self->end < self->current)
-    mask |= STACK_END_LT_CURRENT;
+    mask 	|= STACK_END_LT_CURRENT;
   char content_ok = mask == 0;
 
   if (self->element_size == 0)
-    mask |= STACK_ZERO_EL_SIZE;
+    mask 	|= STACK_ZERO_EL_SIZE;
   if (((const char *)self->current - (const char *)self->begin) %
           self->element_size !=
       0)
-    mask |= STACK_SIZE_NOT_MATCH_EL_SIZE;
+    mask 	|= STACK_SIZE_NOT_MATCH_EL_SIZE;
 
-  mask |=
-      STACK_BAD_STRUCT_CANARY_L * (_stack_check_canary_structbegin(self) == 0);
-  mask |=
-      STACK_BAD_STRUCT_CANARY_R * (_stack_check_canary_structend(self) == 0);
+  mask 		|= STACK_BAD_STRUCT_CANARY_L 
+  				* (_stack_check_canary_structbegin(self) 	== 0);
+  mask 		|= STACK_BAD_STRUCT_CANARY_R 
+  				* (_stack_check_canary_structend(self) 		== 0);
 
   if (content_ok) {
-    mask |= STACK_BAD_CONTENT_CANARY_L *
-            (_stack_check_canary_contentbegin(self) == 0);
-    mask |= STACK_BAD_CONTENT_CANARY_R *
-            (_stack_check_canary_contentend(self) == 0);
+    mask 	|= STACK_BAD_CONTENT_CANARY_L 
+            	* (_stack_check_canary_contentbegin(self) 	== 0);
+    mask 	|= STACK_BAD_CONTENT_CANARY_R 
+            	* (_stack_check_canary_contentend(self) 	== 0);
   }
 
-  mask |= STACK_BAD_STRUCT_HASH * (_stack_check_struct_hash(self) == 0);
+  mask 		|= STACK_BAD_STRUCT_HASH  
+  				* (_stack_check_struct_hash(self) 			== 0);
   if (content_ok) {
-    mask |= STACK_BAD_CONTENT_HASH * (_stack_check_content_hash(self) == 0);
+    mask 	|= STACK_BAD_CONTENT_HASH 
+    			* (_stack_check_content_hash(self) 			== 0);
   }
   return mask;
 }
+// clang-format on
 
 #endif // if _STACK_DEBUG
 
