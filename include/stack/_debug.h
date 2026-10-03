@@ -88,7 +88,7 @@ static inline void stack_assert_failed(const struct Stack *self,
 #include "_check.h"
 static inline long _stack_sec_mask(const struct Stack *self) {
   long mask = 0;
-  if (!self) {
+  if (self==NULL) {
     return STACK_NULL_PTR;
   }
   if (!self->begin)
@@ -122,6 +122,7 @@ static inline long _stack_sec_mask(const struct Stack *self) {
   if (content_ok) {
     mask |= STACK_BAD_CONTENT_HASH * (_stack_check_content_hash(self) != 0);
   }
+  return mask;
 }
 
 
