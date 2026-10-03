@@ -7,20 +7,20 @@
 #include <stdio.h>
 
 enum StackSecBitsEnum {
-  STACK_NULL_PTR = 1 << 0,
-  STACK_NULL_BEGIN = 1 << 1,
-  STACK_CURRENT_LT_BEGIN = 1 << 2,
-  STACK_END_LT_CURRENT = 1 << 3,
-  STACK_ZERO_EL_SIZE = 1 << 4, // 0x10
+  STACK_NULL_PTR = 1 << 0,         // 0x1
+  STACK_NULL_BEGIN = 1 << 1,       // 0x2
+  STACK_CURRENT_LT_BEGIN = 1 << 2, // 0x4
+  STACK_END_LT_CURRENT = 1 << 3,   // 0x8
+  STACK_ZERO_EL_SIZE = 1 << 4,     // 0x10
   // Stack size is not divisible by element size
-  STACK_SIZE_NOT_MATCH_EL_SIZE = 1 << 5,
-  STACK_BAD_STRUCT_CANARY_L = 1 << 6,
-  STACK_BAD_STRUCT_CANARY_R = 1 << 7,
+  STACK_SIZE_NOT_MATCH_EL_SIZE = 1 << 5, // 0x20
+  STACK_BAD_STRUCT_CANARY_L = 1 << 6,    // 0x40
+  STACK_BAD_STRUCT_CANARY_R = 1 << 7,    // 0x80
 
   STACK_BAD_CONTENT_CANARY_L = 1 << 8, // 0x100
-  STACK_BAD_CONTENT_CANARY_R = 1 << 9,
+  STACK_BAD_CONTENT_CANARY_R = 1 << 9, // 0x200
 
-  STACK_BAD_STRUCT_HASH = 1 << 10,
+  STACK_BAD_STRUCT_HASH = 1 << 10,  // 0x400
   STACK_BAD_CONTENT_HASH = 1 << 11, // 0x800
 };
 static inline long _stack_sec_mask(const struct Stack *self);
@@ -41,7 +41,6 @@ static inline void stack_assert_failed(const struct Stack *self,
 /// Begin debug functions
 
 #ifdef _STACK_DEBUG
-
 
 static inline void stack_dump(const struct Stack *self) {
   long sec_mask = _stack_sec_mask(self);
@@ -66,10 +65,10 @@ static inline void stack_dump(const struct Stack *self) {
 #endif
 // Could crash
 #ifdef _STACK_CANARY_CONTENTBEGIN
-  // fprintf(stderr, ",ccl=%08x", self->_canary_begin);
+  // fprintf(stderr, ",ccl=%08x", self->);
 #endif
 #ifdef _STACK_CANARY_CONTENTEND
-  // fprintf(stderr, ",ccr=%08x", self->_canary_end);
+  // fprintf(stderr, ",ccr=%08x", self->);
 #endif
   fprintf(stderr, "}\n");
 }
@@ -83,12 +82,10 @@ static inline void stack_assert_failed(const struct Stack *self,
   abort();
 }
 
-
-
 #include "_check.h"
 static inline long _stack_sec_mask(const struct Stack *self) {
   long mask = 0;
-  if (self==NULL) {
+  if (self == NULL) {
     return STACK_NULL_PTR;
   }
   if (!self->begin)
@@ -124,7 +121,6 @@ static inline long _stack_sec_mask(const struct Stack *self) {
   }
   return mask;
 }
-
 
 #endif // if _STACK_DEBUG
 
