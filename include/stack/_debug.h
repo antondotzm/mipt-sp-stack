@@ -6,23 +6,26 @@
 #include <stddef.h>
 #include <stdio.h>
 
+// clang-format off
 enum StackSecBitsEnum {
-  STACK_NULL_PTR = 1 << 0,         // 0x1
-  STACK_NULL_BEGIN = 1 << 1,       // 0x2
-  STACK_CURRENT_LT_BEGIN = 1 << 2, // 0x4
-  STACK_END_LT_CURRENT = 1 << 3,   // 0x8
-  STACK_ZERO_EL_SIZE = 1 << 4,     // 0x10
+  STACK_NULL_PTR 				= 1 << 0,	// 0x1
+  STACK_NULL_BEGIN 				= 1 << 1,	// 0x2
+  STACK_CURRENT_LT_BEGIN 		= 1 << 2,	// 0x4
+  STACK_END_LT_CURRENT 			= 1 << 3,	// 0x8
+  STACK_ZERO_EL_SIZE 			= 1 << 4,	// 0x10
   // Stack size is not divisible by element size
-  STACK_SIZE_NOT_MATCH_EL_SIZE = 1 << 5, // 0x20
-  STACK_BAD_STRUCT_CANARY_L = 1 << 6,    // 0x40
-  STACK_BAD_STRUCT_CANARY_R = 1 << 7,    // 0x80
+  STACK_SIZE_NOT_MATCH_EL_SIZE 	= 1 << 5,	// 0x20
+  STACK_BAD_STRUCT_CANARY_L 	= 1 << 6,	// 0x40
+  STACK_BAD_STRUCT_CANARY_R 	= 1 << 7,	// 0x80
 
-  STACK_BAD_CONTENT_CANARY_L = 1 << 8, // 0x100
-  STACK_BAD_CONTENT_CANARY_R = 1 << 9, // 0x200
+  STACK_BAD_CONTENT_CANARY_L 	= 1 << 8,	// 0x100
+  STACK_BAD_CONTENT_CANARY_R 	= 1 << 9,	// 0x200
 
-  STACK_BAD_STRUCT_HASH = 1 << 10,  // 0x400
-  STACK_BAD_CONTENT_HASH = 1 << 11, // 0x800
+  STACK_BAD_STRUCT_HASH 		= 1 << 10,	// 0x400
+  STACK_BAD_CONTENT_HASH 		= 1 << 11,	// 0x800
 };
+// clang-format on
+
 static inline long _stack_sec_mask(const struct Stack *self);
 
 static inline void stack_dump(const struct Stack *stack);
