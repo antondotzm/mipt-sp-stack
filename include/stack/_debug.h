@@ -11,17 +11,17 @@ enum StackSecBitsEnum {
   STACK_NULL_BEGIN = 1 << 1,
   STACK_CURRENT_LT_BEGIN = 1 << 2,
   STACK_END_LT_CURRENT = 1 << 3,
-  STACK_ZERO_EL_SIZE = 1 << 4,
+  STACK_ZERO_EL_SIZE = 1 << 4, // 0x10
   // Stack size is not divisible by element size
   STACK_SIZE_NOT_MATCH_EL_SIZE = 1 << 5,
   STACK_BAD_STRUCT_CANARY_L = 1 << 6,
   STACK_BAD_STRUCT_CANARY_R = 1 << 7,
 
-  STACK_BAD_CONTENT_CANARY_L = 1 << 8,
+  STACK_BAD_CONTENT_CANARY_L = 1 << 8, // 0x100
   STACK_BAD_CONTENT_CANARY_R = 1 << 9,
 
   STACK_BAD_STRUCT_HASH = 1 << 10,
-  STACK_BAD_CONTENT_HASH = 1 << 11,
+  STACK_BAD_CONTENT_HASH = 1 << 11, // 0x800
 };
 static inline long _stack_sec_mask(const struct Stack *self);
 
@@ -107,20 +107,20 @@ static inline long _stack_sec_mask(const struct Stack *self) {
     mask |= STACK_SIZE_NOT_MATCH_EL_SIZE;
 
   mask |=
-      STACK_BAD_STRUCT_CANARY_L * (_stack_check_canary_structbegin(self) != 0);
+      STACK_BAD_STRUCT_CANARY_L * (_stack_check_canary_structbegin(self) == 0);
   mask |=
-      STACK_BAD_STRUCT_CANARY_R * (_stack_check_canary_structend(self) != 0);
+      STACK_BAD_STRUCT_CANARY_R * (_stack_check_canary_structend(self) == 0);
 
   if (content_ok) {
     mask |= STACK_BAD_CONTENT_CANARY_L *
-            (_stack_check_canary_contentbegin(self) != 0);
+            (_stack_check_canary_contentbegin(self) == 0);
     mask |= STACK_BAD_CONTENT_CANARY_R *
-            (_stack_check_canary_contentend(self) != 0);
+            (_stack_check_canary_contentend(self) == 0);
   }
 
-  mask |= STACK_BAD_STRUCT_HASH * (_stack_check_struct_hash(self) != 0);
+  mask |= STACK_BAD_STRUCT_HASH * (_stack_check_struct_hash(self) == 0);
   if (content_ok) {
-    mask |= STACK_BAD_CONTENT_HASH * (_stack_check_content_hash(self) != 0);
+    mask |= STACK_BAD_CONTENT_HASH * (_stack_check_content_hash(self) == 0);
   }
   return mask;
 }
