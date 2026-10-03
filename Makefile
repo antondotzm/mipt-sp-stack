@@ -1,4 +1,4 @@
-CFLAGS:=-fPIC -O3 -g -Wall -Wextra -Iinclude -fsanitize=address,undefined -std=c11 -D_STACK_SEC_ALL
+CFLAGS:=-fPIC -O3 -g -Wall -Wextra -Iinclude -fsanitize=address,undefined -std=c11 -D_STACK_SEC_ALL -D_STACK_DEBUG
 BUILDDIR:=dist
 DISTDIR:=dist
 CC:=clang
@@ -10,9 +10,10 @@ build:
 	$(CC) $(CFLAGS) $(BUILDDIR)/main.o $(BUILDDIR)/stack.o -o $(DISTDIR)/main
 
 fmt:
-	$(CC)-format -i tests/*.c
-	$(CC)-format -i src/*.c
-	$(CC)-format -i include/*.h
+	clang-format -i tests/*.c
+	clang-format -i src/*.c
+	clang-format -i include/*.h
+	clang-format -i include/stack/*.h
 
 run:
 	$(MAKE) build

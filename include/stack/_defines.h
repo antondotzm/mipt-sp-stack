@@ -1,7 +1,6 @@
 #ifndef _STACK_DEFINES_H
 #define _STACK_DEFINES_H
 
-
 #ifdef _STACK_SEC_ALL
 #ifndef _STACK_HASH_ALL
 #define _STACK_HASH_ALL

@@ -1,8 +1,10 @@
 #ifndef _STACK_ERROR_H
 #define _STACK_ERROR_H
 
-typedef enum { STACK_OK = 0, STACK_UNKNOWN = -1,
-    // STACK_EMPTY=1
+typedef enum {
+  STACK_OK = 0,
+  STACK_UNKNOWN = -1,
+  // STACK_EMPTY=1
 } StackErrorKind;
 
 typedef struct {

@@ -1,4 +1,3 @@
 #include <stack/stack.h>
 
-int main()
-{}
+int main() {}

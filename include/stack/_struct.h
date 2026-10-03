@@ -11,7 +11,7 @@ struct Stack {
   void *current;
   void *end;
   size_t element_size;
-  
+
 #ifdef _STACK_CANARY_STRUCTEND
   _stack_canary_t _canary_end;
 #endif

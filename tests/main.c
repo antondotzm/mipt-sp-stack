@@ -7,6 +7,7 @@ int main() {
   assert(stack_is_ok(stack_with_capacity(&s, 0, 5)));
   long v = 4;
   stack_push(&s, &v);
+  // s.element_size = 3;
   stack_pop(&s, &v);
   stack_free(&s);
   printf("test main passed\n");
