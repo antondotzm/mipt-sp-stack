@@ -27,19 +27,21 @@ static inline void _stack_fill_sec(struct Stack *self) {
 #ifdef _STACK_CANARY_STRUCTEND
   self->_canary_end = _STACK_CANARY_BASE;
 #endif
+
 #ifdef _STACK_CANARY_CONTENTBEGIN
 _stack_fill_canary_contentbegin(self);
 #endif
 #ifdef _STACK_CANARY_CONTENTEND
 _stack_fill_canary_contentend(self);
 #endif
+
 #ifdef _STACK_HASH_CONTENT
   _stack_fill_content_hash(self);
 #endif
 #ifdef _STACK_HASH_STRUCT
   _stack_fill_struct_hash(self);
 #endif
-}
+} // end _stack_fill_sec
 
 #define _stack_check(self) do{ \
   $stack_assert(self, self != NULL); \

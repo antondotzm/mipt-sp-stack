@@ -23,7 +23,8 @@ static inline char _stack_check_canary_contentbegin(const struct Stack* self){
 const static size_t STACK_CANARY_CONTENTBEGIN_SIZE = 0;
 static inline void _stack_fill_canary_contentbegin(struct Stack* _){}
 static inline char _stack_check_canary_contentbegin(const struct Stack* _){return 1;}
-#endif
+#endif // ifdef _STACK_CANARY_CONTENTBEGIN
+
 #ifdef _STACK_CANARY_CONTENTEND
 const  static size_t STACK_CANARY_CONTENTEND_SIZE = _STACK_CANARY_SIZE;
 static inline void _stack_fill_canary_contentend(struct Stack* self){
@@ -36,7 +37,8 @@ static inline char _stack_check_canary_contentend(const struct Stack* self){
 const static size_t STACK_CANARY_CONTENTEND_SIZE = 0;
 static inline void _stack_fill_canary_contentend(struct Stack* _){}
 static inline char _stack_check_canary_contentend(const struct Stack* _){return 1;}
-#endif
+#endif // ifdef _STACK_CANARY_CONTENTEND
+
 const static size_t STACK_CANARY_CONTENT_SIZE = STACK_CANARY_CONTENTBEGIN_SIZE+STACK_CANARY_CONTENTEND_SIZE;
 
 
@@ -50,7 +52,7 @@ static inline char _stack_check_canary_structbegin(const struct Stack* self){
 #else
 static inline void _stack_fill_canary_structbegin(struct Stack* _){}
 static inline char _stack_check_canary_structbegin(const struct Stack* _){return 1;}
-#endif
+#endif // if _STACK_CANARY_STRUCTBEGIN
 
 #ifdef _STACK_CANARY_STRUCTEND
 static inline void _stack_fill_canary_structend(struct Stack* self){
@@ -63,7 +65,7 @@ static inline char _stack_check_canary_structend(const struct Stack* self){
 static inline void _stack_fill_canary_structend(struct Stack* _){}
 static inline char _stack_check_canary_structend(const struct Stack* _){return 1;}
 
-#endif
+#endif // if _STACK_CANARY_STRUCTEND
 
 
-#endif
+#endif // if _STACK_CANARY_H

@@ -15,7 +15,7 @@ static inline void stack_assert_failed(const struct Stack *stack,
     stack_assert_failed(stack, #assertable, __FILE__, __LINE__);
 #else
 #define $stack_assert(stack, assertable) assert(assertable);
-#endif
+#endif // if _STACK_DEBUG
 
 
 /// Begin debug functions
@@ -31,8 +31,8 @@ static inline void stack_assert_failed(const struct Stack *self,
   stack_dump(self);
   abort();
 }
-#endif
+#endif // if _STACK_DEBUG
 
 /// End debug functions
 
-#endif
+#endif // if _STACK_DEBUG_H

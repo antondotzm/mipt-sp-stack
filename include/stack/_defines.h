@@ -13,7 +13,7 @@
 #ifndef _STACK_CANARY_DYNAMIC
 // #define _STACK_CANARY_DYNAMIC
 #endif
-#endif
+#endif // if _STACK_SEC_ALL
 
 #ifdef _STACK_HASH_ALL
 #ifndef _STACK_HASH_CONTENT
@@ -22,7 +22,8 @@
 #ifndef _STACK_HASH_STRUCT
 #define _STACK_HASH_STRUCT
 #endif
-#endif
+#endif // if _STACK_HASH_ALL
+
 #ifdef _STACK_CANARY_ALL
 #ifndef _STACK_CANARY_CONTENT
 #define _STACK_CANARY_CONTENT
@@ -30,7 +31,7 @@
 #ifndef _STACK_CANARY_STRUCT
 #define _STACK_CANARY_STRUCT
 #endif
-#endif
+#endif // if _STACK_CANARY_ALL
 
 #ifdef _STACK_CANARY_CONTENT
 #ifndef _STACK_CANARY_CONTENTBEGIN
@@ -39,7 +40,8 @@
 #ifndef _STACK_CANARY_CONTENTEND
 #define _STACK_CANARY_CONTENTEND
 #endif
-#endif
+#endif // if _STACK_CANARY_CONTENT
+
 #ifdef _STACK_CANARY_STRUCT
 #ifndef _STACK_CANARY_STRUCTBEGIN
 #define _STACK_CANARY_STRUCTBEGIN
@@ -47,20 +49,10 @@
 #ifndef _STACK_CANARY_STRUCTEND
 #define _STACK_CANARY_STRUCTEND
 #endif
-#endif
+#endif // if _STACK_CANARY_STRUCT
 
 #ifdef _STACK_CANARY_DYNAMIC
 #error "Dynamic canary is not yet implemented"
 #endif
-#if defined(_STACK_CANARY_CONTENTBEGIN) || defined(_STACK_CANARY_CONTENTEND)
-// #error "Stack content canary is not yet implemented"
-#endif
-#if defined(_STACK_CANARY_STRUCTBEGIN) || defined(_STACK_CANARY_STRUCTEND)
-// #error "Stack content canary is not yet implemented"
-#endif
-#ifdef _STACK_HASH_CONTENT
-// #error "Stack content hash is not yet implemented"
-#endif
-
 
 #endif
